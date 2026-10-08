@@ -1,0 +1,50 @@
+@let p = planeta();
+
+<article
+  class="flex flex-col overflow-hidden rounded-xl border bg-white shadow-sm transition"
+  [class.border-stone-200]="!esFavorito()"
+  [class.border-ki-500]="esFavorito()"
+  [class.ring-2]="esFavorito()"
+  [class.ring-ki-500]="esFavorito()"
+>
+
+  <div class="flex justify-center bg-linear-to-b from-ki-100 to-ki-50 ">
+    @if (imagenFallo()) {
+      <svg lucideImageOff class="my-12 size-12 text-stone-400"></svg>
+    } @else {
+      <img [src]="p.image" [alt]="p.name" loading="lazy" (error)="imagenFallo.set(true)" class="h-auto w-full object-contain" />
+    }
+  </div>
+
+  <div class="flex flex-1 flex-col gap-2 p-4">
+    <div class="flex flex-1 gap-1">
+      <span class="grid size-6 place-items-center rounded-full bg-ki-500 text-white">
+        <svg lucideStar class="size-3 fill-red-500"></svg>
+      </span>
+      <h3 class="text-lg font-semibold leading-tight">
+        <a [routerLink]="['/planetas', p.id]" class="hover:text-capsula-700 hover:underline">{{ p.name }}</a>
+      </h3>
+    </div>
+
+    <div class=" flex m-1">
+      @if (p.isDestroyed) {
+        <span class="rounded-full bg-red-400 px-2 py-1 text-white text-xs">Destruido</span>
+      } @else {
+        <span class="rounded-full bg-green-400 px-2 py-1 text-stone-700 text-xs">Todavia existe</span>
+      }
+    </div>
+
+
+
+    <button
+      type="button"
+      (click)="marcar()"
+      [attr.aria-pressed]="esFavorito()"
+      class="mt-auto flex items-center justify-center gap-1.5 rounded-lg border px-3 py-1.5 text-sm font-medium transition"
+      [class]="esFavorito() ? 'border-ki-500 bg-ki-500 text-white' : 'border-stone-300 text-stone-700 hover:bg-stone-50'"
+    >
+      <svg lucideStar class="size-4" [class.fill-current]="esFavorito()"></svg>
+      {{ esFavorito() ? 'Favorito' : 'Marcar favorito' }}
+    </button>
+  </div>
+</article>

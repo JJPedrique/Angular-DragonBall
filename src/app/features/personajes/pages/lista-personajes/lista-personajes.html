@@ -1,0 +1,40 @@
+<!-- [E53] Contenedor -> presentación: bajan [texto] y [raza], suben (textoCambio) y (razaCambio) -->
+<app-filtros-personajes
+  [texto]="texto()"
+  [raza]="raza()"
+  [razas]="razas"
+  [genero]="genero()"
+  [generos]="generos"
+  (textoCambio)="alCambiarTexto($event)"
+  (razaCambio)="alCambiarRaza($event)"
+  (generoCambio)="alCambiarGenero($event)"
+/>
+
+<!-- [E57] Cargando / resultados / @empty -->
+@if (cargando()) {
+  <p class="text-stone-500">Cargando…</p>
+} @else {
+  <p class="mb-4 text-sm text-stone-500">{{ total() }} resultados · página {{ pagina() }} de {{ totalPaginas() }}</p>
+
+  <!--
+    Layout masonry (estilo Pinterest) con columnas de CSS: columns-2 / sm:columns-3 / lg:columns-4.
+    El navegador reparte las tarjetas en columnas y cada una empieza justo donde termina la de arriba.
+    Ojo: el orden va de arriba hacia abajo en cada columna, no de izquierda a derecha.
+    Cada tarjeta lleva break-inside-avoid (en su host) para no partirse entre dos columnas.
+  -->
+  <!-- [E26] Masonry con columns-*. Aquí el padre usa la tarjeta: [entradas] y (salida) -->
+  <section class="columns-2 gap-4 sm:columns-3 lg:columns-4">
+    @for (p of personajes(); track p.id) {
+      <app-personaje-card
+        [personaje]="p"
+        [esFavorito]="favs.esPersonajeFavorito(p.id)"
+        (favoritoCambiado)="favs.alternarPersonaje($event)"
+      />
+    } @empty {
+      <p class="col-span-full text-stone-500">Nadie se llama "{{ texto() }}" en este universo.</p>
+    }
+  </section>
+
+  <!-- [E58] Paginador de shared/: (cambio) trae la página pedida -->
+  <app-paginador [pagina]="pagina()" [totalPaginas]="totalPaginas()" (cambio)="pagina.set($event)" />
+}

@@ -1,0 +1,42 @@
+<h2 class="mb-6 text-2xl font-bold">Sugerir un personaje</h2>
+
+@if (enviado(); as nombre) {
+  <p class="mb-6 flex max-w-lg items-center gap-2 rounded-lg border border-emerald-600 bg-emerald-50 px-4 py-3 text-emerald-900">
+    <svg lucideCircleCheck class="size-5"></svg>
+    Gracias. Recibimos la sugerencia de <strong>{{ nombre }}</strong>.
+  </p>
+}
+
+<!-- [E73] [formGroup] conecta con la clase. (ngSubmit) al enviar. novalidate apaga la validación del navegador -->
+<form [formGroup]="form" (ngSubmit)="enviar()" novalidate class="grid max-w-lg gap-5">
+  <label class="grid gap-1.5 font-medium">
+    Nombre
+    <!-- [E74] formControlName enlaza el campo con su control -->
+    <input formControlName="nombre" class="campo" />
+    @if (tieneError('nombre', 'required')) { <small class="font-normal text-red-700">El nombre es obligatorio.</small> }
+    @if (tieneError('nombre', 'minlength')) { <small class="font-normal text-red-700">Mínimo 3 caracteres.</small> }
+  </label>
+
+  <label class="grid gap-1.5 font-medium">
+    Raza
+    <select formControlName="raza" class="campo">
+      @for (r of razas; track r) {
+        <option [value]="r">{{ r }}</option>
+      }
+    </select>
+  </label>
+
+  <label class="grid gap-1.5 font-medium">
+    Tu correo
+    <input type="email" formControlName="correo" class="campo" />
+    @if (tieneError('correo', 'required')) { <small class="font-normal text-red-700">El correo es obligatorio.</small> }
+    @if (tieneError('correo', 'email')) { <small class="font-normal text-red-700">Ese correo no parece válido.</small> }
+  </label>
+
+  <label class="grid gap-1.5 font-medium">
+    <span>¿Por qué debería estar? <span class="font-normal text-stone-500">({{ form.controls.motivo.value.length }}/200)</span></span>
+    <textarea formControlName="motivo" rows="3" class="campo"></textarea>
+  </label>
+
+  <button type="submit" class="w-fit rounded-lg bg-ki-500 px-5 py-2.5 font-medium text-white hover:bg-ki-600">Enviar sugerencia</button>
+</form>

@@ -1,0 +1,22 @@
+<div class="mb-6 flex flex-wrap gap-3">
+  <label class="relative min-w-60 flex-1">
+    <svg lucideSearch class="pointer-events-none absolute top-1/2 left-3 size-4 -translate-y-1/2 text-stone-400"></svg>
+    <input
+      type="search"
+      placeholder="Buscar por nombre…"
+      [value]="texto()"
+      (input)="alEscribir($event)"
+      class="w-full rounded-lg border border-stone-300 bg-white py-2 pr-3 pl-9 outline-none focus:border-ki-500 focus:ring-2 focus:ring-ki-500/30"
+    />
+  </label>
+
+  <select
+    [value]="estado()"
+    (change)="alElegirEstado($event)"
+    class="rounded-lg border border-stone-300 bg-white px-3 py-2 outline-none focus:border-ki-500 focus:ring-2 focus:ring-ki-500/30"
+  >
+    <option value="todos">Todas los Planetas</option>
+    <option value="true">Destruido</option>
+    <option value="false">Todavia existe</option>
+  </select>
+</div>

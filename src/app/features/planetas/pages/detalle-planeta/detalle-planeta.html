@@ -1,0 +1,46 @@
+<a routerLink="/planetas" class="mb-6 inline-flex items-center gap-1.5 text-sm font-medium text-capsula-700 hover:underline">
+  <svg lucideArrowLeft class="size-4"></svg> Volver al listado
+</a>
+
+<!-- [E45] undefined mientras carga -> @else. 'as p' guarda el valor -->
+@if (planeta(); as p) {
+  <article class="grid gap-8 rounded-2xl border border-stone-200 bg-white md:grid-cols-[320px_1fr]">
+    <div class="grid place-items-center rounded-xl bg-linear-to-b from-ki-100 to-ki-50 overflow-hidden">
+      
+      <img [src]="p.image" [alt]="p.name" class="max-h-96 object-contain" />
+    </div>
+
+    <div class="flex flex-col gap-4 p-6">
+      <div>
+        <h2 class="text-3xl font-bold">{{ p.name }}</h2>
+      </div>
+
+      <dl class="grid grid-cols-2 gap-3 text-sm">
+        <div class="flex rounded-lg bg-stone-50 p-3 gap-3">
+          <dt class="flex items-center gap-1 text-stone-500"><svg lucideZap class="size-4 text-ki-600"></svg> Estado Actual</dt>
+          @if (p.isDestroyed) {
+              <span class="rounded-full bg-red-400 px-2 py-1 text-white text-xs">Destruido</span>
+            } @else {
+              <span class="rounded-full bg-green-400 px-2 py-1 text-stone-700 text-xs">Todavia existe</span>
+            }
+        </div>
+      </dl>
+
+      @if (p.description) {
+        <p class="leading-relaxed text-stone-700">{{ p.description }}</p>
+      }
+
+      <button
+        type="button"
+        (click)="favs.alternarPlanetas(p.id)"
+        class="flex w-fit items-center gap-2 rounded-lg bg-ki-500 px-4 py-2 font-medium text-white hover:bg-ki-600"
+      >
+        <svg lucideStar class="size-4" [class.fill-current]="favs.esPlanetasFavorito"></svg>
+        {{ favs.esPlanetasFavorito(p.id) ? 'Quitar de favoritos' : 'Agregar a favoritos' }}
+      </button>
+    </div>
+  </article>
+
+} @else {
+  <p class="text-stone-500">Cargando personaje…</p>
+}

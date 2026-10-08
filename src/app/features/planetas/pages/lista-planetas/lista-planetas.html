@@ -1,0 +1,28 @@
+<!-- [E53] Contenedor -> presentación: bajan [texto] y [raza], suben (textoCambio) y (razaCambio) -->
+<app-filtros-planetas
+  [texto]="texto()"
+  [estado]="estado()"
+  (estadoCambio)="alCambiarEstado($event)"
+  (textoCambio)="alCambiarTexto($event)"
+/>
+
+<!-- [E57] Cargando / resultados / @empty -->
+@if (cargando()) {
+  <p class="text-stone-500">Cargando…</p>
+} @else {
+  <p class="mb-4 text-sm text-stone-500">{{ total() }} resultados · página {{ pagina() }} de {{ totalPaginas() }}</p>
+
+  <section class="columns-2 gap-4 sm:columns-3 lg:columns-4">
+    @for (p of planetas(); track p.id) {
+      <app-planeta-card
+        [planeta]="p"
+        [esFavorito]="favs.esPlanetasFavorito(p.id)"
+        (favoritoCambiado)="favs.alternarPlanetas($event)"
+      />
+    } @empty {
+      <p class="col-span-full text-stone-500">Nadie se llama "{{ texto() }}" en este universo.</p>
+    }
+  </section>
+
+  <app-paginador [pagina]="pagina()" [totalPaginas]="totalPaginas()" (cambio)="pagina.set($event)" />
+}

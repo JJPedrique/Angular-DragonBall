@@ -1,0 +1,27 @@
+@import 'tailwindcss';
+
+/* Colores propios: Tailwind genera clases como bg-ki-500 o text-capsula-700 */
+/* [E07] @theme: colores propios -> Tailwind genera bg-ki-500, text-capsula-700... */
+@theme {
+  --color-ki-50: #fff6ec;
+  --color-ki-100: #ffe9cf;
+  --color-ki-500: #f28c28;
+  --color-ki-600: #d9731a;
+  --color-capsula-700: #1e4e9a;
+  --color-capsula-900: #132f5e;
+}
+
+body {
+  @apply bg-stone-50 text-stone-900 antialiased;
+}
+
+/* Una clase propia armada con utilidades de Tailwind, para no repetirlas en cada campo */
+/* [E75] .campo reutilizable. .ng-invalid y .ng-touched las pone Angular solo */
+@layer components {
+  .campo {
+    @apply rounded-lg border border-stone-300 bg-white px-3 py-2 font-normal outline-none focus:border-ki-500 focus:ring-2 focus:ring-ki-500/30;
+  }
+  .campo.ng-invalid.ng-touched {
+    @apply border-red-600;
+  }
+}

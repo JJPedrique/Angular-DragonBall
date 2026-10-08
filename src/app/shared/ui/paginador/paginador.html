@@ -1,0 +1,22 @@
+<!-- [E60] Solo aparece si hay más de una página. [disabled] en los extremos -->
+@if (totalPaginas() > 1) {
+  <nav class="mt-8 flex items-center justify-center gap-4" aria-label="Paginación">
+    <button
+      type="button"
+      (click)="ir(-1)"
+      [disabled]="pagina() === 1"
+      class="flex items-center gap-1 rounded-lg border border-stone-300 bg-white px-3 py-2 disabled:cursor-not-allowed disabled:opacity-40"
+    >
+      <svg lucideChevronLeft class="size-4"></svg> Anterior
+    </button>
+    <span class="text-sm tabular-nums">{{ pagina() }} / {{ totalPaginas() }}</span>
+    <button
+      type="button"
+      (click)="ir(1)"
+      [disabled]="pagina() === totalPaginas()"
+      class="flex items-center gap-1 rounded-lg border border-stone-300 bg-white px-3 py-2 disabled:cursor-not-allowed disabled:opacity-40"
+    >
+      Siguiente <svg lucideChevronRight class="size-4"></svg>
+    </button>
+  </nav>
+}

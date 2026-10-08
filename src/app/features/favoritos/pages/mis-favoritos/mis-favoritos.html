@@ -1,0 +1,32 @@
+<h2 class="mb-6 text-2xl font-bold">Mis personajes favoritos</h2>
+
+<!--
+  Layout masonry (estilo Pinterest) con columnas de CSS: columns-2 / sm:columns-3 / lg:columns-4.
+  El navegador reparte las tarjetas en columnas y cada una empieza justo donde termina la de arriba.
+  Ojo: el orden va de arriba hacia abajo en cada columna, no de izquierda a derecha.
+  Cada tarjeta lleva break-inside-avoid (en su host) para no partirse entre dos columnas.
+-->
+<section class="columns-2 gap-4 sm:columns-3 lg:columns-4">
+  @for (pe of personajes(); track pe.id) {
+    <app-personaje-card [personaje]="pe" [esFavorito]="true" (favoritoCambiado)="favs.alternarPersonaje($event)" />
+  } @empty {
+    <p class="col-span-full text-stone-500">
+      Todavía no marcaste ninguno.
+      <a routerLink="/personajes" class="font-medium text-capsula-700 underline">Ir al listado</a>
+    </p>
+  }
+</section>
+
+<h2 class="mb-6 text-2xl font-bold">Mis planetas favoritos</h2>
+
+<section class="columns-2 gap-4 sm:columns-3 lg:columns-4">
+  @for (p of planetas(); track p.id) {
+    <app-planeta-card [planeta]="p" [esFavorito]="true" (favoritoCambiado)="favs.alternarPlanetas($event)"/>
+  } @empty {
+    <p class="col-span-full text-stone-500">
+      Todavía no marcaste ninguno.
+      <a routerLink="/planetas" class="font-medium text-capsula-700 underline">Ir al listado</a>
+    </p>
+  }
+</section>
+
