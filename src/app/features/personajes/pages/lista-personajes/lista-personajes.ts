@@ -50,7 +50,7 @@ export class ListaPersonajes {
   );
 
   // [E51] undefined = todavía no llegó la primera respuesta
-  protected readonly cargando = computed(() => this.respuesta() === undefined);
+  protected readonly cargando = (() => this.respuesta() === undefined);
   protected readonly personajes = computed(() => this.respuesta()?.items ?? []);
   protected readonly total = computed(() => this.respuesta()?.meta.totalItems ?? 0);
   protected readonly totalPaginas = computed(() => this.respuesta()?.meta.totalPages ?? 0);
